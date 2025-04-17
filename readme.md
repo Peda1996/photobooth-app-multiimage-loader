@@ -23,22 +23,41 @@ This tool helps you create and update image position layouts for photobooth-app.
 pip install psd-tools
 ```
 
-3. Download the script to your computer
-4. Make it executable (Linux/Mac only):
+3. Download both script files to your computer:
+   - `photobooth_psd_extractor.py` (command-line version)
+   - `photobooth_layout_tool.py` (graphical interface version)
+4. Make them executable (Linux/Mac only):
 
 ```bash
 chmod +x photobooth_psd_extractor.py
+chmod +x photobooth_layout_tool.py
 ```
 
 ## Usage
 
-### Basic Usage
+You can use this tool either via command-line or with a simple graphical interface.
+
+### Graphical Interface (Recommended for beginners)
+
+For users who prefer not to use the terminal, a graphical interface is provided:
+
+1. Double-click on `photobooth_layout_tool.py` to launch the application
+2. If needed, the tool will automatically install required dependencies
+3. Use the "Browse" buttons to select your PSD file and config file
+4. Set the layer group name (default is "photobooth_images")
+5. Click "Process PSD File" to run the extraction
+
+The graphical interface offers the same functionality as the command-line version but with a user-friendly interface that makes it easy to select files and see progress.
+
+### Command-Line Usage
+
+#### Basic Usage
 
 ```bash
 python photobooth_psd_extractor.py --psd your_design.psd --config ~/config/config.json
 ```
 
-### All Options
+#### All Options
 
 ```
 python photobooth_psd_extractor.py [options]
@@ -51,19 +70,19 @@ Options:
   --output-json FILE    Path for the extracted positions JSON (default: merge_definitions.json)
 ```
 
-### Common Examples
+#### Common Examples
 
-#### Extract from PSD and update config:
+##### Extract from PSD and update config:
 ```bash
 python photobooth_psd_extractor.py --psd my_layout.psd --config ~/config/config.json
 ```
 
-#### Use a different layer group name:
+##### Use a different layer group name:
 ```bash
 python photobooth_psd_extractor.py --psd my_layout.psd --group-name "photo_frames"
 ```
 
-#### Specify custom output files:
+##### Specify custom output files:
 ```bash
 python photobooth_psd_extractor.py --psd design.psd --output-image background.png --output-json positions.json
 ```
@@ -113,9 +132,11 @@ The script generates several files:
 ## Photobooth Config Location
 
 The photobooth config is typically located at:
-- Linux: `~/.config/photobooth/config.json`
+- Linux: `~/config/photobooth/config.json`
 - Windows: `C:\Users\YOUR_USERNAME\config\photobooth\config.json`
 - Mac: `~/config/photobooth/config.json`
+
+The graphical interface will attempt to automatically find this directory.
 
 ## Troubleshooting
 
@@ -124,6 +145,7 @@ If you see `ERROR: Group 'photobooth_images' not found`, check:
 - The spelling of your layer group name (case sensitive)
 - Make sure it's a proper group, not just a layer
 - Try using the `--group-name` option with the exact name shown in the error message
+- In the GUI, check the "Layer Group Name" field is correct
 
 ### No Visible Layers
 If you see `Warning: No visible layers found`, check:
