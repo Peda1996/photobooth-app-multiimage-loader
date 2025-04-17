@@ -9,12 +9,32 @@ This tool helps you create and update image position layouts for photobooth-app.
 - Creates a clean background image without the placeholder frames
 - Makes it easy to design your photobooth layout visually rather than editing JSON
 
-## Requirements
+## Quick Start
+
+### Windows
+
+1. Make sure Python is installed on your system
+2. Run `install.bat` to install required packages
+3. Run `start_ui.bat` to launch the graphical interface
+   - Or use `start.bat` for command-line version
+
+### Linux/Mac
+
+1. Make sure Python is installed on your system
+2. Run `./install.sh` to install required packages and make scripts executable
+3. Run `./start_ui.sh` to launch the graphical interface
+   - Or use `./start.sh` for command-line version
+
+## Installation Details
+
+### Requirements
 
 - Python 3.6 or higher
 - `psd-tools` library (for reading PSD files)
 
-## Installation
+### Manual Installation
+
+If the installation scripts don't work for you:
 
 1. Make sure you have Python 3 installed
 2. Install the required package:
@@ -23,45 +43,39 @@ This tool helps you create and update image position layouts for photobooth-app.
 pip install psd-tools
 ```
 
-3. Download both script files to your computer:
-   - `photobooth_psd_extractor.py` (command-line version)
-   - `photobooth_layout_tool.py` (graphical interface version)
-4. Make them executable (Linux/Mac only):
+3. Make scripts executable (Linux/Mac only):
 
 ```bash
-chmod +x photobooth_psd_extractor.py
-chmod +x photobooth_layout_tool.py
+chmod +x *.sh *.py
 ```
 
-## Usage
+## Using the Graphical Interface
 
-You can use this tool either via command-line or with a simple graphical interface.
+1. Run `start_ui.bat` (Windows) or `./start_ui.sh` (Linux/Mac)
+2. Click "Browse" to select your PSD file
+3. Click "Browse" next to Config File to find your photobooth config.json
+4. Make sure "Layer Group Name" is set to "photobooth_images" (or your custom group name)
+5. Click "Process PSD File"
+6. The tool will:
+   - Extract image positions from your PSD
+   - Update your config file (saved as config.json.updated)
+   - Generate a background image with placeholders hidden
 
-### Graphical Interface (Recommended for beginners)
+## Using the Command-Line Interface
 
-For users who prefer not to use the terminal, a graphical interface is provided:
-
-1. Double-click on `photobooth_layout_tool.py` to launch the application
-2. If needed, the tool will automatically install required dependencies
-3. Use the "Browse" buttons to select your PSD file and config file
-4. Set the layer group name (default is "photobooth_images")
-5. Click "Process PSD File" to run the extraction
-
-The graphical interface offers the same functionality as the command-line version but with a user-friendly interface that makes it easy to select files and see progress.
-
-### Command-Line Usage
-
-#### Basic Usage
+### Basic Usage
 
 ```bash
-python photobooth_psd_extractor.py --psd your_design.psd --config ~/config/config.json
+# Windows
+start.bat --psd your_design.psd --config "C:\path\to\config.json"
+
+# Linux/Mac
+./start.sh --psd your_design.psd --config ~/config/config.json
 ```
 
-#### All Options
+### All Options
 
 ```
-python photobooth_psd_extractor.py [options]
-
 Options:
   --psd FILE            Path to your PSD file (default: background.psd)
   --config FILE         Path to your photobooth config file (default: config.json)
@@ -70,21 +84,21 @@ Options:
   --output-json FILE    Path for the extracted positions JSON (default: merge_definitions.json)
 ```
 
-#### Common Examples
+### Common Examples
 
-##### Extract from PSD and update config:
+#### Extract from PSD and update config:
 ```bash
-python photobooth_psd_extractor.py --psd my_layout.psd --config ~/config/config.json
+./start.sh --psd my_layout.psd --config ~/config/config.json
 ```
 
-##### Use a different layer group name:
+#### Use a different layer group name:
 ```bash
-python photobooth_psd_extractor.py --psd my_layout.psd --group-name "photo_frames"
+./start.sh --psd my_layout.psd --group-name "photo_frames"
 ```
 
-##### Specify custom output files:
+#### Specify custom output files:
 ```bash
-python photobooth_psd_extractor.py --psd design.psd --output-image background.png --output-json positions.json
+./start.sh --psd design.psd --output-image background.png --output-json positions.json
 ```
 
 ## Creating Your PSD File
@@ -93,7 +107,7 @@ You can create compatible PSD files using Adobe Photoshop or free alternatives l
 
 ### Guidelines:
 
-1. **Create a layer group** named `photobooth_images` (or your custom name specified with `--group-name`)
+1. **Create a layer group** named `photobooth_images` (or your custom name)
 2. Inside this group, **add a separate layer for each image placeholder**
    - Name each layer descriptively (e.g., "left", "top_right", etc.)
    - These names will appear in your configuration
@@ -132,7 +146,7 @@ The script generates several files:
 ## Photobooth Config Location
 
 The photobooth config is typically located at:
-- Linux: `~/config/photobooth/config.json`
+- Linux: `~/.config/photobooth/config.json`
 - Windows: `C:\Users\YOUR_USERNAME\config\photobooth\config.json`
 - Mac: `~/config/photobooth/config.json`
 
@@ -140,11 +154,15 @@ The graphical interface will attempt to automatically find this directory.
 
 ## Troubleshooting
 
+### Installation Issues
+- Make sure Python 3.6+ is installed and in your PATH
+- Try running the install script again
+- For manual installation, run: `pip install psd-tools`
+
 ### Group Not Found
 If you see `ERROR: Group 'photobooth_images' not found`, check:
 - The spelling of your layer group name (case sensitive)
 - Make sure it's a proper group, not just a layer
-- Try using the `--group-name` option with the exact name shown in the error message
 - In the GUI, check the "Layer Group Name" field is correct
 
 ### No Visible Layers
@@ -154,7 +172,7 @@ If you see `Warning: No visible layers found`, check:
 
 ### Image Sizes
 If your extracted positions look wrong:
-- Make sure your PSD dimensions match your photobooth canvas dimensions
+- Make sure PSD dimensions match your photobooth canvas dimensions
 - Check your layers have clear boundaries
 
 ## Example Files
